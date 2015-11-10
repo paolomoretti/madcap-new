@@ -1,0 +1,16 @@
+{
+  "name": "madcap",
+  "version": "1.0.0",
+  "description": "Madcap Collective new and last web site",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "connect": "^3.4.0",
+    "serve-static": "^1.10.0"
+  }
+}

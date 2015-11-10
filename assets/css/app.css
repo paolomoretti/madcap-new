@@ -1,0 +1,102 @@
+[ng-click] {
+  cursor: pointer;
+}
+* {
+  font-family: Montserrat;
+  font-size: 1em;
+  line-height: 1.5em;
+}
+html {
+  height: 100%;
+  width: 100%;
+}
+html body {
+  background: #000000 url(../images/bg.jpeg) no-repeat;
+  background-size: cover;
+  background-position: center center;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}
+html body .site {
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+html body .site .logo {
+  width: 50%;
+  max-width: 400px;
+  margin: 0 auto;
+  position: relative;
+  padding: 40px 0;
+}
+html body .site .logo a {
+  display: block;
+  position: relative;
+  text-align: center;
+}
+html body .site .logo a img {
+  width: 100%;
+  max-height: 220px;
+  border: 0;
+}
+html body .site navigation {
+  text-align: center;
+  display: block;
+  z-index: 10;
+}
+html body .site navigation ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: block;
+}
+html body .site navigation ul li {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: inline-block;
+}
+html body .site navigation ul li:after {
+  content: '●';
+  padding: 0 10px 0 13px;
+  font-size: 80%;
+  color: white;
+}
+html body .site navigation ul li:last-child:after {
+  content: '';
+}
+html body .site navigation ul li a {
+  text-transform: uppercase;
+  color: white;
+  font-family: Montserrat;
+  text-decoration: none;
+}
+html body .site navigation ul li a:hover {
+  opacity: .8;
+  text-decoration: underline;
+}
+html body .site .content {
+  max-width: 600px;
+  margin: 40px auto;
+  color: white;
+  font-size: 90%;
+  line-height: 110%;
+}
+html body .site .content a {
+  color: white;
+  text-decoration: underline;
+  text-transform: uppercase;
+}
+html body footer {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  margin-left: -300px;
+  width: 600px;
+  text-align: center;
+  color: white;
+  font-size: 75%;
+  opacity: .5;
+}
