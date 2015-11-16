@@ -77,14 +77,14 @@ html body .site navigation ul li a:hover {
   opacity: .8;
   text-decoration: underline;
 }
-html body .site .content {
+html body .site > .content {
   max-width: 600px;
   margin: 40px auto;
   color: white;
   font-size: 90%;
   line-height: 110%;
 }
-html body .site .content a {
+html body .site > .content a {
   color: white;
   text-decoration: underline;
   text-transform: uppercase;
@@ -99,4 +99,36 @@ html body footer {
   color: white;
   font-size: 75%;
   opacity: .5;
+}
+.thumb-tile {
+  width: 20%;
+  padding-top: 20%;
+  position: relative;
+  display: inline-block;
+}
+.thumb-tile .image {
+  position: absolute;
+  left: 5px;
+  right: 0;
+  top: 5px;
+  bottom: 0;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  z-index: 2;
+  opacity: .5;
+}
+.thumb-tile .content {
+  position: absolute;
+  left: 5px;
+  right: 0;
+  top: 5px;
+  bottom: 0;
+  padding: 10px;
+  word-break: break-all;
+  z-index: 3;
+}
+.thumb-tile .content h3 {
+  margin: 0 0 15px 0;
+  text-transform: uppercase;
 }

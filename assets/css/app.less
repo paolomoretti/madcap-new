@@ -92,7 +92,7 @@ html {
         }
       }
 
-      .content {
+      > .content {
         max-width: 600px;
         margin: 40px auto;
         color: white;
@@ -118,6 +118,43 @@ html {
       color: white;
       font-size: 75%;
       opacity: .5;
+    }
+  }
+}
+
+/// Directives
+.thumb-tile {
+  width: 20%;
+  padding-top: 20%;
+  position: relative;
+  display: inline-block;
+
+  .image {
+    position: absolute;
+    left: 5px;
+    right: 0;
+    top: 5px;
+    bottom: 0;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    z-index: 2;
+    opacity: .5;
+  }
+
+  .content {
+    position: absolute;
+    left: 5px;
+    right: 0;
+    top: 5px;
+    bottom: 0;
+    padding: 10px;
+    word-break: break-all;
+    z-index: 3;
+
+    h3 {
+      margin: 0 0 15px 0;
+      text-transform: uppercase;
     }
   }
 }
