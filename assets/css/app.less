@@ -139,6 +139,7 @@ html {
   padding-top: 20%;
   position: relative;
   display: inline-block;
+  overflow: hidden;
 
   .image {
     transition: opacity, .3s;
@@ -231,6 +232,26 @@ html {
       font-size: 200%;
       text-align: center;
       margin-bottom: 40px;
+    }
+  }
+}
+
+.content.productions {
+  .thumb-tile {
+    font-size: 75%;
+
+    > .content {
+      h3 {
+        line-height: 1.4em;
+      }
+    }
+  }
+}
+
+.content.production {
+  .other-productions {
+    .list-view {
+      display: block;
     }
   }
 }

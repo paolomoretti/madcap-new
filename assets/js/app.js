@@ -12,6 +12,15 @@ angular
       templateUrl: "/templates/artist.html",
       controller: "ArtistController"
     });
+
+    $routeProvider.when("/productions", {
+      templateUrl: "/templates/productions.html"
+    })
+
+    $routeProvider.when("/productions/:production_id", {
+      templateUrl: "/templates/production.html",
+      controller: "ProductionController"
+    });
   }])
 
   .controller("EngineController", [
@@ -30,7 +39,8 @@ angular
       $scope.navigation = ['artists', 'productions', 'news', 'store', 'contacts']
 
       $scope.data = {
-        artists: $resource("http://madcapcollective.com/api.php/wp_posts?transform=1&filter=post_type,eq,artist").get()
+        artists: $resource("http://madcapcollective.com/api.php/wp_posts?transform=1&filter=post_type,eq,artist").get(),
+        productions: $resource("http://madcapcollective.com/api.php/wp_posts?transform=1&filter=post_type,eq,album").get()
       };
 
       this.openSection = function (section) {
@@ -41,6 +51,12 @@ angular
         if (e.post_type == 'artist') {
           $location.path("/artists/" + e.ID);
         }
+
+        if (e.post_type == 'album') {
+          $location.path("/productions/" + e.ID);
+        }
+
+        console.log ("epostt", e.post_type);
       };
 
       this.getEntityTitle = wp.getEntityTitle;
@@ -66,12 +82,43 @@ angular
 
   }])
 
+
+  .controller("ProductionController", ['$scope', '$routeParams', 'wp', '$sce', function ($scope, $routeParams, wp, $sce) {
+    var ctrl = this;
+
+    this.loadProduction = function () {
+      $scope.production = _($scope.data.productions.wp_posts).find({ID: $routeParams.production_id});
+
+      wp.getEntityImage($scope.production, function (url) {
+        $scope.production.thumbnail = url;
+      });
+
+      wp.getEntityProp($scope.production, 'artist_reference', function (ID) {
+        $scope.data.artists.$resolved ? ctrl.loadArtist() : $scope.data.artists.$promise.then(ctrl.loadArtist);
+      });
+
+      $scope.production.description = $sce.trustAsHtml($scope.production.post_content);
+    };
+
+    this.loadArtist = function (ID) {
+      $scope.production.artist = _($scope.data.artists.wp_posts).find({ID: ID});
+    };
+
+    !$scope.data.productions.$resolved ? $scope.data.productions.$promise.then(this.loadProduction) : this.loadProduction();
+
+  }])
+
   .service("wp", function ($http) {
     var API = {
 
       getEntityTitle: function (entity) {
-        if (!entity || entity == undefined) return;
-        return /en-->([a-zA-Z\s\d]*)</.exec(entity.post_title)[1]
+        if (!typeof entity == 'string') return;
+
+        entity.post_title.replace(/\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/gi, "\\$&");
+
+        var ret = /en-->([\(\)"'-_\:\;a-zA-Z\s\d]*)</gi.exec(entity.post_title);
+
+        return ret == null ? entity.post_title : ret[1];
       },
 
       getEntityProp: function (entity, prop, next) {

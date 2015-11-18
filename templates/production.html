@@ -1,0 +1,15 @@
+<section class="content production">
+    <table width="100%">
+        <tr valign="top">
+            <td class="other-productions">
+                <thumb-tile class="list-view" ng-repeat="entity in data.productions.wp_posts"></thumb-tile>
+            </td>
+            <td class="artist-content">
+                <div class="image" style="background-image: url({{production.thumbnail}})"></div>
+                <h2>{{::engineCtrl.getEntityTitle(production)}}</h2>
+                <h3>Artist: {{production.artist}}</h3>
+                <pre ng-bind-html="production.description"></pre>
+            </td>
+        </tr>
+    </table>
+</section>
