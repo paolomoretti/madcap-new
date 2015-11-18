@@ -1,12 +1,27 @@
 angular
-  .module("mdcp", ['ngResource'])
+  .module("mdcp", ['ngResource', 'ngRoute'])
+
+  .config(['$locationProvider', '$routeProvider', function ($locationProvider, $routeProvider) {
+    //$locationProvider.html5Mode(true);
+
+    $routeProvider.when("/artists", {
+      templateUrl: "/templates/artists.html"
+    })
+
+    $routeProvider.when("/artists/:artist_id", {
+      templateUrl: "/templates/artist.html",
+      controller: "ArtistController"
+    });
+  }])
+
   .controller("EngineController", [
     '$scope',
     '$resource',
     '$http',
+    '$location',
     'wp',
 
-    function ($scope, $resource, $http, wp) {
+    function ($scope, $resource, $http, $location, wp) {
 
       var ctrl = this;
 
@@ -18,12 +33,14 @@ angular
         artists: $resource("http://madcapcollective.com/api.php/wp_posts?transform=1&filter=post_type,eq,artist").get()
       };
 
-      this.setTemplate = function (section) {
-        $scope.currentSection = section;
-      };
+      this.openSection = function (section) {
+        $location.path("/" + section);
+      }
 
-      this.getTemplate = function () {
-        return $scope.currentSection != null ? "templates/" + $scope.currentSection + ".html" : false;
+      this.openEntity = function (e) {
+        if (e.post_type == 'artist') {
+          $location.path("/artists/" + e.ID);
+        }
       };
 
       this.getEntityTitle = wp.getEntityTitle;
@@ -32,10 +49,28 @@ angular
 
   }])
 
+  .controller("ArtistController", ['$scope', '$routeParams', 'wp', '$sce', function ($scope, $routeParams, wp, $sce) {
+    this.loadArtist = function () {
+      var artist = _($scope.data.artists.wp_posts).find({ID: $routeParams.artist_id});
+
+      wp.getEntityImage(artist, function (url) {
+        artist.thumbnail = url;
+      });
+
+      artist.description = $sce.trustAsHtml(artist.post_content);
+
+      $scope.artist = artist;
+    }
+
+    !$scope.data.artists.$resolved ? $scope.data.artists.$promise.then(this.loadArtist) : this.loadArtist();
+
+  }])
+
   .service("wp", function ($http) {
     var API = {
 
       getEntityTitle: function (entity) {
+        if (!entity || entity == undefined) return;
         return /en-->([a-zA-Z\s\d]*)</.exec(entity.post_title)[1]
       },
 
@@ -71,11 +106,10 @@ angular
     return {
       restrict: "E",
       replace: true,
-      template: '<div class="thumb-tile">' +
+      template: '<div class="thumb-tile" ng-click="engineCtrl.openEntity(entity)">' +
         '<div class="image" style="background-image: url({{thumbCtrl.entity.picture}})"></div>' +
         '<div class="content">' +
-          '<h3>{{engineCtrl.getEntityTitle(entity)}}</h3>' +
-          '<small>{{entity.ID}}</small>' +
+          '<h3>{{::engineCtrl.getEntityTitle(entity)}}</h3>' +
         '</div>' +
       '</div>',
 

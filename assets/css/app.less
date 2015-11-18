@@ -8,6 +8,15 @@
   line-height: 1.5em;
 }
 
+pre {
+  font-family: 'Open sans';
+  max-width: 600px;
+  white-space: pre-wrap;       /* CSS 3 */
+  white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+  white-space: -pre-wrap;      /* Opera 4-6 */
+  white-space: -o-pre-wrap;
+}
+
 html {
   height: 100%;
   width: 100%;
@@ -109,8 +118,8 @@ html {
     }
 
     footer {
-      position: absolute;
-      bottom: 10px;
+      position: fixed;
+      bottom: 0px;
       left: 50%;
       margin-left: -300px;
       width: 600px;
@@ -118,6 +127,8 @@ html {
       color: white;
       font-size: 75%;
       opacity: .5;
+      background: rgba(0, 0, 0, .8);
+      z-index: 100;
     }
   }
 }
@@ -130,6 +141,7 @@ html {
   display: inline-block;
 
   .image {
+    transition: opacity, .3s;
     position: absolute;
     left: 5px;
     right: 0;
@@ -149,12 +161,76 @@ html {
     top: 5px;
     bottom: 0;
     padding: 10px;
-    word-break: break-all;
     z-index: 3;
 
     h3 {
       margin: 0 0 15px 0;
       text-transform: uppercase;
+      word-break: break-word;
+      font-size: 110%;
+    }
+  }
+
+  &:hover {
+    .image {
+      opacity: .8;
+    }
+  }
+
+  &.list-view {
+    width: auto;
+    padding: 0;
+    line-height: 1em;
+    font-size: 65%;
+
+    .image {
+      width: 20px;
+      height: 20px;
+      border-radius: 20px;
+      opacity: 1;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .content {
+      position: static;
+      vertical-align: middle;
+      display: inline-block;
+      margin-right: 20px;
+      line-height: 1em;
+      padding: 8px 10px 8px 27px;
+
+      h3 {
+        margin: 0;
+      }
+    }
+  }
+}
+
+.content.artist {
+
+  .other-artists {
+    .list-view {
+      display: block;
+    }
+  }
+
+  .artist-content {
+
+    .image {
+      width: 200px;
+      height: 200px;
+      border-radius: 100px;
+      margin: 20px auto;
+      background-size: cover;
+      background-position: center center;
+    }
+
+    h2 {
+      font-size: 200%;
+      text-align: center;
+      margin-bottom: 40px;
     }
   }
 }

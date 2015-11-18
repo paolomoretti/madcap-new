@@ -1,0 +1,18 @@
+<section class="content artist">
+    <div class="sub-navigation">
+
+    </div>
+
+    <table width="100%">
+        <tr valign="top">
+            <td class="other-artists">
+                <thumb-tile class="list-view" ng-repeat="entity in data.artists.wp_posts"></thumb-tile>
+            </td>
+            <td class="artist-content">
+                <div class="image" style="background-image: url({{artist.thumbnail}})"></div>
+                <h2>{{::engineCtrl.getEntityTitle(artist)}}</h2>
+                <pre ng-bind-html="artist.description"></pre>
+            </td>
+        </tr>
+    </table>
+</section>
